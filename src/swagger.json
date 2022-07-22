@@ -1,0 +1,214 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Challenge 2 - Ignite - Node.js",
+    "description": "Challenge of Node.js from Ignite",
+    "version": "1.0.0",
+    "contact": {
+      "email": "cleysonsilva.me@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "John Doe",
+                  "email": "john.doe@example.com"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "b29f7656-f468-4ac7-93c7-5b094221fe1c",
+                    "name": "John Doe",
+                    "email": "john.doe@example.com",
+                    "admin": false,
+                    "created_at": "2022-07-22T07:37:02.135Z",
+                    "updated_at": "2022-07-22T07:37:02.135Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": { "error": "User already exists" }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "get": {
+        "tags": ["User"],
+        "summary": "List all users",
+        "description": "List all users",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "b29f7656-f468-4ac7-93c7-5b094221fe1c"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "admin": false,
+                      "id": "5a6b6c9e-48ed-4d08-b04d-33003b09f607",
+                      "name": "John Doe",
+                      "email": "john.doe@example.com",
+                      "created_at": "2022-07-22T07:45:34.095Z",
+                      "updated_at": "2022-07-22T07:45:34.095Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Change user admin status",
+        "description": "Set user admin like true",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "b29f7656-f468-4ac7-93c7-5b094221fe1c"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "admin": true,
+                    "id": "5a6b6c9e-48ed-4d08-b04d-33003b09f607",
+                    "name": "John Doe",
+                    "email": "john.doe@example.com",
+                    "created_at": "2022-07-22T07:45:34.095Z",
+                    "updated_at": "2022-07-22T07:45:34.095Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user profile",
+        "description": "The user profile",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "b29f7656-f468-4ac7-93c7-5b094221fe1c"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "admin": true,
+                    "id": "5a6b6c9e-48ed-4d08-b04d-33003b09f607",
+                    "name": "John Doe",
+                    "email": "john.doe@example.com",
+                    "created_at": "2022-07-22T07:45:34.095Z",
+                    "updated_at": "2022-07-22T07:45:34.095Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
